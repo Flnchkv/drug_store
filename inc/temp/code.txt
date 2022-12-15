@@ -1,0 +1,99 @@
+<?php if(isset($_POST['type1'])) 
+ { $link = connect_it(); 
+ $name = "goods";
+ $query = "SELECT * FROM $name WHERE type = 'Антидепрессанты'"; 
+ $result1 = $link->query($query); 
+ if (! $result1) { echo $link->error; return false;} 
+ else while($result = $result1->fetch_array()) 
+ { echo '<form method="post"> <table border = 5 >'; 
+{$img = $result['img'];
+ $g_name = $result['name'];
+ $price = $result['price'];
+echo "<tr> <td> <img src='$img'> <b>$g_name</b> $price </td> <td> <button name='readmore' value='$g_name' formaction = \"readmore.php?" .session_name().'='.session_id() ."\"> Подробнее </button> </td> </tr> "; }
+ echo '</table>'; } 
+ mysqli_close($link); mysqli_free_result($result1);}
+if(isset($_POST['type2'])) 
+ { $link = connect_it(); 
+ $name = "goods";
+ $query = "SELECT * FROM $name WHERE type = 'БАД'"; 
+ $result1 = $link->query($query); 
+ if (! $result1) { echo $link->error; return false;} 
+ else while($result = $result1->fetch_array()) 
+ { echo '<form method="post"> <table border = 5 >'; 
+{$img = $result['img'];
+ $g_name = $result['name'];
+ $price = $result['price'];
+echo "<tr> <td> <img src='$img'> <b>$g_name</b> $price </td> <td> <button name='readmore' value='$g_name' formaction = \"readmore.php?" .session_name().'='.session_id() ."\"> Подробнее </button> </td> </tr> "; }
+ echo '</table>'; } 
+ mysqli_close($link); mysqli_free_result($result1);}
+if(isset($_POST['type3'])) 
+ { $link = connect_it(); 
+ $name = "goods";
+ $query = "SELECT * FROM $name WHERE type = 'Офтальмология'"; 
+ $result1 = $link->query($query); 
+ if (! $result1) { echo $link->error; return false;} 
+ else while($result = $result1->fetch_array()) 
+ { echo '<form method="post"> <table border = 5 >'; 
+{$img = $result['img'];
+ $g_name = $result['name'];
+ $price = $result['price'];
+echo "<tr> <td> <img src='$img'> <b>$g_name</b> $price </td> <td> <button name='readmore' value='$g_name' formaction = \"readmore.php?" .session_name().'='.session_id() ."\"> Подробнее </button> </td> </tr> "; }
+ echo '</table>'; } 
+ mysqli_close($link); mysqli_free_result($result1);}
+if(isset($_POST['type4'])) 
+ { $link = connect_it(); 
+ $name = "goods";
+ $query = "SELECT * FROM $name WHERE type = 'Противосудорожные'"; 
+ $result1 = $link->query($query); 
+ if (! $result1) { echo $link->error; return false;} 
+ else while($result = $result1->fetch_array()) 
+ { echo '<form method="post"> <table border = 5 >'; 
+{$img = $result['img'];
+ $g_name = $result['name'];
+ $price = $result['price'];
+echo "<tr> <td> <img src='$img'> <b>$g_name</b> $price </td> <td> <button name='readmore' value='$g_name' formaction = \"readmore.php?" .session_name().'='.session_id() ."\"> Подробнее </button> </td> </tr> "; }
+ echo '</table>'; } 
+ mysqli_close($link); mysqli_free_result($result1);}
+if(isset($_POST['type5'])) 
+ { $link = connect_it(); 
+ $name = "goods";
+ $query = "SELECT * FROM $name WHERE type = 'Седативные средства'"; 
+ $result1 = $link->query($query); 
+ if (! $result1) { echo $link->error; return false;} 
+ else while($result = $result1->fetch_array()) 
+ { echo '<form method="post"> <table border = 5 >'; 
+{$img = $result['img'];
+ $g_name = $result['name'];
+ $price = $result['price'];
+echo "<tr> <td> <img src='$img'> <b>$g_name</b> $price </td> <td> <button name='readmore' value='$g_name' formaction = \"readmore.php?" .session_name().'='.session_id() ."\"> Подробнее </button> </td> </tr> "; }
+ echo '</table>'; } 
+ mysqli_close($link); mysqli_free_result($result1);}
+if(isset($_POST['type6'])) 
+ { $link = connect_it(); 
+ $name = "goods";
+ $query = "SELECT * FROM $name WHERE type = 'Снотворные средства'"; 
+ $result1 = $link->query($query); 
+ if (! $result1) { echo $link->error; return false;} 
+ else while($result = $result1->fetch_array()) 
+ { echo '<form method="post"> <table border = 5 >'; 
+{$img = $result['img'];
+ $g_name = $result['name'];
+ $price = $result['price'];
+echo "<tr> <td> <img src='$img'> <b>$g_name</b> $price </td> <td> <button name='readmore' value='$g_name' formaction = \"readmore.php?" .session_name().'='.session_id() ."\"> Подробнее </button> </td> </tr> "; }
+ echo '</table>'; } 
+ mysqli_close($link); mysqli_free_result($result1);}
+if(isset($_POST['type7'])) 
+ { $link = connect_it(); 
+ $name = "goods";
+ $query = "SELECT * FROM $name WHERE type = 'Транквилизаторы'"; 
+ $result1 = $link->query($query); 
+ if (! $result1) { echo $link->error; return false;} 
+ else while($result = $result1->fetch_array()) 
+ { echo '<form method="post"> <table border = 5 >'; 
+{$img = $result['img'];
+ $g_name = $result['name'];
+ $price = $result['price'];
+echo "<tr> <td> <img src='$img'> <b>$g_name</b> $price </td> <td> <button name='readmore' value='$g_name' formaction = \"readmore.php?" .session_name().'='.session_id() ."\"> Подробнее </button> </td> </tr> "; }
+ echo '</table>'; } 
+ mysqli_close($link); mysqli_free_result($result1);}
+?>

@@ -1,0 +1,123 @@
+﻿input.off {
+    background: GoldenRod;
+}
+input.on {
+    background: SlateBlue;
+}
+input.b {
+    background: Chocolate;
+    height: 50px;
+    width: 150px;
+}
+
+body {
+    margin: 0px;
+    background: Cornsilk;
+}
+
+menu {background: DarkGoldenRod;}
+menu > table {
+    background: DarkGoldenRod;
+    height: 200px;
+    width: 95%;
+    margin-left: 0;
+    margin-right: 10px;
+
+}
+
+    menu > table > center {
+        margin-top: 60px;
+        height: 100px;
+        align-content: center;
+    }
+img.mine {height: 400px;}
+img.icon {
+    height: 200px;
+}
+img {
+    height: 100px;
+}
+table {
+    margin-left:10%;
+    margin-right: 10%;
+    width: 80%;
+}
+
+article{
+    height:53%;
+overflow: auto;
+}
+footer {
+    clear: both;
+    background: BurlyWood;
+}
+
+ h3 {
+    text-align: right;
+}
+
+p {
+    font-size: 15px;
+}
+A:link {
+    text-decoration: none;
+    color: SlateBlue;
+    font-size: 15px;
+}
+
+A:visited {
+    text-decoration: none;
+    color: BlueViolet;
+    font-family: Verdana, Arial;
+}
+
+A:hover {
+    text-decoration: none;
+    color: Chocolate;
+    font-family: Verdana, Arial;
+}
+
+
+
+/* Слайдер */
+	.slider 
+	{
+		width: 100%; height: 170px;
+		position: relative;
+		text-align: center;
+	}
+	.slider > input 
+	{ 
+		display: inline-block; 
+		z-index: 100; 
+		position: relative;
+		background: rgba (90, 90, 90, 0.8);
+		border: 2px solid rgba (190, 190, 190, 0.8);
+		cursor: pointer;
+		width: 20px; height: 20px;
+		border-radius: 8px;
+		margin-right: 4px;
+		top: 85%;
+	}
+	.slider > div 
+	{
+		position: absolute;
+		top: 0px; left: 0px; right: 0px; bottom: 0px; z-index: 0;
+	}
+	.slider > div 
+	{
+		visibility: hidden; opacity:0;
+		transition: opacity 0.8s ease-out 0.1s, visibility 0.1s ease-out 0.9s;
+	}
+	.slider > input:checked + label + div 
+	{
+		visibility: visible; opacity:1; 
+		transition: opacity 0.8s ease-out 0.1s, visibility 0.1s ease-out 0s;
+	}
+	.slider > div > p
+	{
+		position: absolute;
+		top: 0px; left: 0px; right: 0px; 
+	}
+	.slider > div > img { height: 100%;}
+/* Конец слайдера */
