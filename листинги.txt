@@ -1,0 +1,67 @@
+CREATE DATABASE `drag_store`;
+CREATE TABLE `user` 
+( 
+	`id` int(4) auto_increment not null,
+	`fio` varchar(150) not null,
+	`login` varchar(20),
+	`pswd` varchar(20),
+	`address` varchar(80),	
+	`phone` varchar(15) not null,
+	`email` varchar(50),
+	`discount` int(2),
+	`bday` date,
+	`photo` varchar(50) not null,
+	`role` varchar(10) not null, 
+	`workS` date not null, 
+	PRIMARY KEY(id)
+) ENGINE=InnoDB Auto_increment=1 default charset=utf8; 
+
+CREATE TABLE `categories` 
+( 
+	`name` varchar(150) not null,
+	PRIMARY KEY(name)
+) ENGINE=InnoDB Auto_increment=1 default charset=utf8; 
+
+CREATE TABLE `goods` 
+( 
+	`id` int(4) auto_increment not null,
+	`name` varchar(150) not null,
+	`type` varchar(150) not null,
+	`about` varchar (1000), 
+	`img` varchar (200) not null,
+	`price` decimal (8,2) not null,
+	PRIMARY KEY(id),
+	FOREIGN KEY (`type`)  REFERENCES `categories`(`name`) 
+) ENGINE=InnoDB Auto_increment=1 default charset=utf8; 
+
+CREATE TABLE `zakaz` 
+( 
+	`id` int(4) auto_increment not null,
+	`client` int(4) not null,
+	`date` date not null,
+	`good` int(4) not null,
+	`count` int(10) not null,
+	`cost` decimal(8,2),
+	`sended` boolean,
+	`done` boolean,
+	PRIMARY KEY(`id`),
+	FOREIGN KEY (`client`)  REFERENCES `user`(`id`),
+	FOREIGN KEY (`good`)  REFERENCES `goods`(`id`)
+) ENGINE=InnoDB Auto_increment=1 default charset=utf8; 
+
+INSERT INTO `categories`(`name`) VALUES ("Снотворные средства"), ("БАД"), ("Противосудорожные"), ("Транквилизаторы"), ("Седативные средства"), ("Антидепрессанты"), ("Офтальмология");
+
+INSERT INTO `user`(`fio`, `login`, `pswd`, `address`, `phone`, `email`, `role`) VALUES
+("Коновалов Андрей Михайлович", "director","pswd","Артем, ул. Западная 8","8-880-987-35-35","director@mail.ru", 'director'),
+("Коновал Михайл", "kn","knm","Артем, ул. Кирова 15","8-800-555-35-35","konovam@mail.ru", 'provisor'),
+("Козлова Светлана Евгеньевна", "koz","koz123","Артем, ул. Фрунзе 10","8-914-756-35-35","kozlova@mail.ru", 'customer');
+
+INSERT INTO `goods`(`name`, `type`, `about`, `img`, `price`) VALUES
+("9 месяцев Омегамама капсулы №30", "БАД", "Омегамама - биологически активная добавка к пище для беременных и кормящих матерей на основе полинасыщенных жирных кислот Омега-3. Омегамама изготавливается на основе экстракта жира из анчоусов и сардин.", "/img/goods/omegamama.jpeg", 572.00),
+("Ад минус таблетки №40 БАД Эвалар", "БАД", "Способствует поддержанию артериального давления в норме. 1 таблетка содержит: Трава и цветки гречихи 225 мг, Экстракт гречихи и сушеницы 110 мг, Экстракт плодоножек вишни 50 мг, Витамин С 15 мг, Рутин 10 мг","/img/goods/adminus.jpeg", 274.00), 
+("Азарга 10мг+5мг капли глазные флакон-капельница 5мл", "Офтальмология", "Глазные капли Азарга назначают при повышенном внутриглазном давлении, связанном с открытоугольной глаукомой или внутриглазной гипертензией в тех случаях, когда терапия препаратами с одним активным компонентом оказалась недостаточной для стойкого снижения внутриглазного давления.","/img/goods/azarga.jpeg", 960.00);
+
+INSERT INTO zakaz (client, date, good, count, sended, done, cost) VALUES
+(1, '2017-12-22', 1, 3, 0, 0, 543.4), 
+(1, '2017-12-22', 2, 2, 1, 1, 520.6),
+(1, '2017-12-22', 1, 5, 1, 0, 543.4);
