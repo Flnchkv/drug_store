@@ -66,12 +66,14 @@ function discount() // использовать после создания по
 {
 	$dc = 0;
 	$query = "SELECT `discount` FROM `user` WHERE `id` = '".$_SESSION['user_id']."'";
-	$result1 = $link -> query($query);;
+	$result1 = $link -> query($query);
 	if (! $result1) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result1) != 0)
+	else while($result = $result1->fetch_array()){
 		$dc = mysql_result($result1, 0, 'discount');
+    mysqli_close($link);
     mysql_free_result($result1);
 	return $dc;
+}
 }
 
 function good_type_select($filename)
@@ -122,7 +124,7 @@ function good_only_name_search($search_name)
 	 else while($result = $result1->fetch_array())
 	 {
 		 echo "<form method='post'> <table border = 5 >";
-		 for($j = 0; $j < mysql_num_rows($result); $j++)
+		 while($result = $result1->fetch_array())
 		 {
 			 $img = mysql_result($result, $j, 'img');
 			 $g_name = mysql_result($result, $j, 'name');
@@ -163,9 +165,9 @@ function to_busket($g_id, $count)
 	$link = connect_it();
 
 	$query = "SELECT `price` FROM `goods` WHERE `id`= $g_id";
-	$result = $link -> query($query);
-	if (! $result) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result) != 0)
+	$result1 = $link -> query($query);
+	if (! $result1) { echo mysql_error(); return false;}
+	else while($result = $result1->fetch_array())
 		$cost = $result['price'] * (100 - discount()) / 100;
 
 	$name = 'zakaz';
@@ -175,7 +177,7 @@ function to_busket($g_id, $count)
 	if (! $result) { echo mysql_error(); return false;}
     else { echo "Данные введены"; return true;}
     mysqli_close($link);
-  	mysqli_free_result($result);
+  	mysqli_free_result($result1);
 }
 
 function user_acc()
@@ -280,8 +282,6 @@ function show_busket() // хотите изменить заказ - удаля�
 		echo "<form method='post' action='busket.php?".session_name().'='.session_id()."'> <table border = 5 >";
 		for ($i = 0; $i < mysql_num_rows($result); $i++)
 		{
-
-
 			$img = $result['.img'];
 			$g_name = $result['.name'];
 			$z_id = $result['.id'];
@@ -307,9 +307,9 @@ function already_bought()
 	$name3 = 'goods';
 	$query = "SELECT `$name1`.`fio`, `$name2`.`id`, `$name2`.`date`, `$name2`.`count`, `$name2`.`cost`, `$name2`.`done`, `$name3`.`name` FROM $name1, $name2, $name3 WHERE `$name2`.`client` = `$name1`.`id` AND `$name2`.`good` = `$name3`.`id` AND `$name2`.`sended` = 1 AND `$name2`.`done` = 0 ";
        // echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
-    $result = $link -> query($query);
-    if (! $result) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result) != 0)
+    $result1 = $link -> query($query);
+    if (! $result1) { echo mysql_error(); return false;}
+	else while($result = $result1->fetch_array())
 	{
 		for($i=0; $i < mysql_num_rows($result); $i++)
 		{
@@ -325,8 +325,8 @@ function already_bought()
 		}
 	}
 	echo "</table> </form>";
-	mysql_close();
-    mysql_free_result($result);
+  mysqli_close($link);
+  mysqli_free_result($result1);
 }
 
 function already_done()
@@ -338,9 +338,9 @@ function already_done()
 	$name3 = 'goods';
 	$query = "SELECT `$name1`.`fio`, `$name2`.`id`, `$name2`.`date`, `$name2`.`count`, `$name2`.`cost`, `$name2`.`done`, `$name3`.`name` FROM $name1, $name2, $name3 WHERE `$name2`.`client` = `$name1`.`id` AND `$name2`.`good` = `$name3`.`id` AND `$name2`.`done` = 1";
        // echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
-    $result = $link -> query($query);
-    if (! $result) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result) != 0)
+    $result1 = $link -> query($query);
+    if (! $result1) { echo mysql_error(); return false;}
+	else while($result = $result1->fetch_array())
 	{
 		for($i=0; $i < mysql_num_rows($result); $i++)
 		{
@@ -356,8 +356,8 @@ function already_done()
 		}
 	}
 	echo "</table> </form>";
-	mysql_close();
-    mysql_free_result($result);
+  mysqli_close($link);
+  mysqli_free_result($result1);
 }
 
 function z_done($z_id)
@@ -381,10 +381,10 @@ function all_goods()
 	$query = "SELECT `id`, `name`, `type`, `price` FROM `$name` ORDER BY `type`";
 		//echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result) != 0)
+    if (! $result1) { echo mysql_error(); return false;}
+	else while($result1 = $result1->fetch_array())
 	{
-		for($i=0; $i < mysql_num_rows($result); $i++)
+		while($result = $result1->fetch_array())
 		{
 			$g_id = $result['id'];
 			$g_name = $result['name'];
@@ -395,7 +395,7 @@ function all_goods()
 	}
 	echo "</table> </form>";
 	mysql_close();
-    mysql_free_result($result);
+    mysql_free_result($result1);
 }
 
 function echo_types()
@@ -445,9 +445,9 @@ function g_edit($g_id)
 	$name = "goods";
 	$query = "SELECT * FROM $name WHERE id = $g_id ";
 		//echo "<font color=green> Запрос: </font>" . $query;
-	$result = $link -> query($query);
-	if (! $result) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result) != 0)
+	$result1 = $link -> query($query);
+	if (! $result1) { echo mysql_error(); return false;}
+	else while($result = $result1->fetch_array())
 	{
 		$img = $result['img'];
 		$g_name = $result['name'];
@@ -459,7 +459,7 @@ function g_edit($g_id)
 	}
 	echo "</table>";
 	mysql_close();
-    mysql_free_result($result);
+    mysql_free_result($result1);
 	echo_types();
 	echo "<button name='good_change'  value='$g_id'> Сохранить изменения </button> </form>";
 }
@@ -498,17 +498,17 @@ function all_users() // доделать
 	$name = 'user';
 	$query = " SELECT * FROM $name";
 		//echo "<font color=green> Запрос: </font>" . $query;
-	$result = $link -> query($query);
-	if (! $result) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result) != 0)
+	$result1 = $link -> query($query);
+	if (! $result1) { echo mysql_error(); return false;}
+	else while($result = $result1->fetch_array())
 	{
 		echo "<table>";
-		for ($i = 0; $i < mysql_num_rows($result); $i++)
+		while($result = $result1->fetch_array())
 		{
 			$name = $result['fio'];
 			$phone = $result['phone'];
 			$discount = $result['discount'];
-			$id = $result['id');
+			$id = $result['id'];
 			$u_role = $result['role'];
 			$since = $result['workS'];
 			echo "<tr> <td> $name </td> <td> $phone </td> <td>". $discount. "% </td> <td> $u_role </td> <td> работает с $since </td> <form method = 'post' action='users.php?".session_name().'='.session_id()."'> <td> <button name='u_edit' value=$id > Изменить </button> </td> <td> <button name='u_delete' value=$id > X </button> </td> </form> </tr>";
@@ -526,9 +526,9 @@ function u_edit($id) // доделать
 	$name = 'user';
 	$query = " SELECT * FROM $name WHERE `id` = $id";
 		//echo "<font color=green> Запрос: </font>" . $query;
-	$result = $link -> query($query);
-	if (! $result) { echo mysql_error(); return false;}
-	else if (mysql_num_rows($result) != 0)
+	$result1 = $link -> query($query);
+	if (! $result1) { echo mysql_error(); return false;}
+	else while($result = $result1->fetch_array())
 	{
 		echo "<form method = 'post' action='users.php?".session_name().'='.session_id()."'> <table>";
 			$name = $result['fio'];
@@ -539,8 +539,8 @@ function u_edit($id) // доделать
 			$since = $result['workS'];
 			echo "<tr> <td colspan=2> $name </td> <td> $phone </td> <td> $email </td> </tr> <tr>  <td> <input name='dc' type='number' value = $discount min=0 max=99 > </td> <td> <input type='text' name='role' list='roles' value='" . $u_role. "' > </td> <td> работает с <input type='date' name='since' value='" . $since ."' > </td> <td> <button name='u_change' value=$id > Сохранить </button> </td>  </tr> </table> <datalist id='roles'> <option> customer </option> <option> provisor </option> <option> director </option> </datalist> </form>";
 	}
-	mysql_close();
-    mysql_free_result($result);
+	mysqli_close();
+    mysqli_free_result($result);
 }
 
 function u_delete($id)
@@ -563,8 +563,8 @@ function u_change($id, $dc, $role, $since)
 	$result = $link -> query($query);
     if (! $result) { echo mysql_error(); return false;}
 	else { echo "Данные удалены"; return true;}
-	mysql_free_result($result);
-	mysql_close();
+	mysqli_free_result($result);
+	mysqli_close();
 }
 
 function remember_pswd($email, $phone)
@@ -578,7 +578,7 @@ function remember_pswd($email, $phone)
 	else if (mysql_num_rows($result) != 0)
 		echo "Ваш пароль - " . mysql_result($result, 0, 'pswd') . ". Запишите его куда-нибудь, и постарайтесь более не терять.";
 	else echo "Проверочные данные были введены неправильно.";
-	mysql_free_result($result);
-	mysql_close();
+	mysqli_free_result($result);
+	mysqli_close();
 }
 ?>
