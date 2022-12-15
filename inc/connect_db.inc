@@ -505,12 +505,12 @@ function all_users() // доделать
 		echo "<table>";
 		for ($i = 0; $i < mysql_num_rows($result); $i++)
 		{
-			$name = mysql_result($result, $i, 'fio');
-			$phone = mysql_result($result, $i, 'phone');
-			$discount = mysql_result($result, $i, 'discount');
-			$id = mysql_result($result, $i, 'id');
-			$u_role = mysql_result($result, $i, 'role');
-			$since = mysql_result($result, $i, 'workS');
+			$name = $result['fio'];
+			$phone = $result['phone'];
+			$discount = $result['discount'];
+			$id = $result['id');
+			$u_role = $result['role'];
+			$since = $result['workS'];
 			echo "<tr> <td> $name </td> <td> $phone </td> <td>". $discount. "% </td> <td> $u_role </td> <td> работает с $since </td> <form method = 'post' action='users.php?".session_name().'='.session_id()."'> <td> <button name='u_edit' value=$id > Изменить </button> </td> <td> <button name='u_delete' value=$id > X </button> </td> </form> </tr>";
 		}
 		echo "</table>";
@@ -531,12 +531,12 @@ function u_edit($id) // доделать
 	else if (mysql_num_rows($result) != 0)
 	{
 		echo "<form method = 'post' action='users.php?".session_name().'='.session_id()."'> <table>";
-			$name = mysql_result($result, 0, 'fio');
-			$email = mysql_result($result, 0, 'email');
-			$phone = mysql_result($result, 0, 'phone');
-			$discount = mysql_result($result, 0, 'discount');
-			$u_role = mysql_result($result, 0, 'role');
-			$since = mysql_result($result, 0, 'workS');
+			$name = $result['fio'];
+			$email = $result['email'];
+			$phone = $result['phone'];
+			$discount = $result['discount'];
+			$u_role = $result['role'];
+			$since = $result['workS'];
 			echo "<tr> <td colspan=2> $name </td> <td> $phone </td> <td> $email </td> </tr> <tr>  <td> <input name='dc' type='number' value = $discount min=0 max=99 > </td> <td> <input type='text' name='role' list='roles' value='" . $u_role. "' > </td> <td> работает с <input type='date' name='since' value='" . $since ."' > </td> <td> <button name='u_change' value=$id > Сохранить </button> </td>  </tr> </table> <datalist id='roles'> <option> customer </option> <option> provisor </option> <option> director </option> </datalist> </form>";
 	}
 	mysql_close();
