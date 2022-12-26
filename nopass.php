@@ -1,8 +1,9 @@
 ﻿<!DOCTYPE HTML>
 <html>
 <head>
-<title> Drag Store </title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta charset="utf-8">
+	<title> Drag Store </title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <p> <a href="index.php" > Назад </a></p>

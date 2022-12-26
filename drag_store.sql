@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 15 2022 г., 07:43
+-- Время создания: Дек 26 2022 г., 20:11
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -38,6 +38,7 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`name`) VALUES
 ('Антидепрессанты'),
 ('БАД'),
+('Нейролептики'),
 ('Обезболивающие'),
 ('Офтальмология'),
 ('Противосудорожные'),
@@ -66,7 +67,7 @@ CREATE TABLE `goods` (
 --
 
 INSERT INTO `goods` (`id`, `name`, `type`, `about`, `img`, `price`) VALUES
-(1, '9 месяцев Омегамама капсулы №30', 'БАД', 'Омегамама - биологически активная добавка к пище для беременных и кормящих матерей на основе полинасыщенных жирных кислот Омега-3. Омегамама изготавливается на основе экстракта жира из анчоусов и сардин.', '/img/goods/omegamama.jpeg', '572.00'),
+(1, '9 месяцев Омегамама капсулы №30', 'Обезболивающие', ' Омегамама - биологически активная добавка к пище для беременных и кормящих матерей на основе полинасыщенных жирных кислот Омега-3. Омегамама изготавливается на основе экстракта жира из анчоусов и сардин. ', '/img/goods/omegamama.jpeg', '572.00'),
 (2, 'Ад минус таблетки №40 БАД Эвалар', 'БАД', 'Способствует поддержанию артериального давления в норме. 1 таблетка содержит: Трава и цветки гречихи 225 мг, Экстракт гречихи и сушеницы 110 мг, Экстракт плодоножек вишни 50 мг, Витамин С 15 мг, Рутин 10 мг', '/img/goods/adminus.jpeg', '274.00'),
 (3, 'Азарга 10мг+5мг капли глазные флакон-капельница 5мл', 'Офтальмология', 'Глазные капли Азарга назначают при повышенном внутриглазном давлении, связанном с открытоугольной глаукомой или внутриглазной гипертензией в тех случаях, когда терапия препаратами с одним активным компонентом оказалась недостаточной для стойкого снижения внутриглазного давления.', '/img/goods/azarga.jpeg', '960.00'),
 (10, 'Фезам', 'Сосудосуживающие', 'fdgl\'d;flkg;lksjfdg;lksdf;lkghj;l.khj', '/img/goods/omegamama.jpeg', '480.00'),
@@ -83,7 +84,7 @@ CREATE TABLE `user` (
   `id` int NOT NULL,
   `fio` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
   `login` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
-  `pswd` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
+  `pswd` varchar(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
   `address` varchar(80) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
   `phone` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
   `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '',
@@ -99,10 +100,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `fio`, `login`, `pswd`, `address`, `phone`, `email`, `discount`, `bday`, `photo`, `role`, `workS`) VALUES
-(1, 'Коновалов Андрей Михайлович', 'director', 'pswd', ' Артем, ул. Западная 8 ', '8-880-987-35-35', 'director@mail.ru', 10, '0000-00-00', '/kozlova/img/users/director.jpg', 'director', '2017-10-01'),
-(2, 'Коновал Михайл', 'kn', 'knm', ' Артем, ул. Кирова 15 ', '8-800-555-35-35', 'konovam@mail.ru', 5, '0000-00-00', '/kozlova/img/users/l9I5e5yPDy8.jpg', 'provisor', '2017-11-01'),
-(3, 'Козлова Светлана Евгеньевна', 'koz', 'koz123', 'Артем, ул. Фрунзе 10', '8-914-756-35-35', 'kozlova@mail.ru', 0, NULL, '', 'customer', '0000-00-00'),
-(4, 'Филончикова Анна Сергеевна', 'fil', '123', 'г Владивосток, ул Державина, д 21, кв 916а', '8-983-508-57-60', 'afilonchikova2@gmail.com', 0, '2001-01-01', '', 'customer', '2001-01-01');
+(1, 'Коновалов Андрей Михайлович', 'director', '$2y$12$BPD/i0YT/A5Xkh7ikWKnv./YeSK7tBeipz7DxUeuL09fiMi027bDW', ' Артем, ул. Западная 8 ', '8-880-987-35-35', 'director@mail.ru', 10, '2012-12-01', '/img/users/director.jpg', 'director', '2017-10-01'),
+(2, 'Коновал Михайл', 'kn', '$2y$12$KKBePIHb3oqw4aINQy0V5eQplnjCUTvx3D.xI4QYLmCIniCVmXUMa', ' Артем, ул. Кирова 15 ', '8-800-555-35-35', 'konovam@mail.ru', 5, '1998-09-08', '/img/users/l9I5e5yPDy8.jpg', 'provisor', '2017-11-01'),
+(4, 'Филончикова Анна Сергеевна', 'fil', '$2y$12$S9RIcUxD8de/7ZXYGricUeDdQUxLaJT870q4eNnnfmb5aGEZz2j3i', 'г Владивосток, ул Державина, д 21, кв 916а', '8-983-508-57-60', 'afilonchikova2@gmail.com', 2, '2001-01-01', '', 'customer', '2001-01-01');
 
 -- --------------------------------------------------------
 

@@ -41,7 +41,7 @@ function menu($page)
 	<table><tr><td><img src='img/icon.jpg' class='icon'></td>
 	<td><center> <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
     
-		 <input type="submit" name="sub" value="Главная"  class="<?php if ($page == "index") echo 'on'; else echo 'off' ?>"> 
+		<input type="submit" name="sub" value="Главная"  class="<?php if ($page == "index") echo 'on'; else echo 'off' ?>"> 
 		<input type="submit" name="sub2" value="Магазин" class="<?php if (($page == "store") || ($page =="search") || ($page == 'readmore')) echo 'on'; else echo 'off' ?>"> 
 		<input type="submit" name="sub3" value="Аккаунт" class="<?php if ($page == "acc") echo 'on'; else echo 'off' ?>"> 
 		<input type="submit" name="sub4" value="Корзина" class="<?php if ($page == "busket") echo 'on'; else echo 'off' ?>"> 
@@ -75,7 +75,9 @@ function search_string($address)
 
 function new_g()
 {
-	echo "<a href='goods.php?".session_name().'='.session_id()."'> Вернуться на страницу выбора товара </a> <form method = 'post' action='goods.php?".session_name().'='.session_id()."'> <table>";
+	echo "<a href='goods.php?".session_name().'='.session_id()."'> Вернуться на страницу выбора товара </a>";
+	echo_good_types('types');
+	echo "<form method = 'post' action='goods.php?".session_name().'='.session_id()."'> <table>";
 	?>
 	<tr> <td> Наименование </td> <td> <input type = 'text' name ='name'> </td> </tr>
 	<tr> <td> Изображение </td> <td> <input type='file' name='img'>  </td> </tr>
@@ -84,7 +86,7 @@ function new_g()
 	<tr> <td> Подробнее о товаре </td> <td> <textarea name='about' rows=3> </textarea> </td> </tr>
 	</table>
 	<input type='submit' name='add_new_good' value='Добавить новый товар'> </form>
-	<?php echo_types();
+	<?php 
 }
 
 function new_t()
@@ -118,12 +120,12 @@ function page_contest($page)
 			$params["secure"], $params["httponly"]);
 		}
 		session_unset();
-		//	session_destroy();
+
 	}
 
 	if (isset($_POST['reg'])) register();
 	if (isset($_POST['remember'])) remember_pswd($_POST['email'], $_POST['phone']);
-
+	
 	if (!isset($_SESSION['session_uname'])) 
 	{
 		echo "Пожалуйста, зайдите в свою учетную запись или зарегистрируйтесь <br/>";
