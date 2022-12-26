@@ -9,7 +9,7 @@ $page = 'index';
 		<meta charset="utf-8">
 		<title> Drag Store </title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="shortcut icon" href="pills.png" type="image/png">
+		<link rel="shortcut icon" href="img/pills.png" type="image/png">
 	</head>
 	<body>
 		<?php include ("inc/str.inc");?>

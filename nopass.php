@@ -10,8 +10,8 @@
 <br/>
 
 <form action="index.php" method="post" >
-	<fieldset>
-	<legend> Регистрация </legend>
+	<fieldset class = back_reg>
+	<legend class = reg> Регистрация </legend>
 	<table > <tr>
 	   <td> <input type='text' name='logreg' placeholder="Логин" maxlength=20 size=21 autofocus required > </td>
 	   <td> <input type='text' name='pswdreg' placeholder="Пароль" maxlength=20 size=21 required > </td> </tr> <tr>

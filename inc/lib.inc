@@ -6,17 +6,17 @@ function headerer()
 		<input type='radio' name='slider1' id='sl1' checked="checked">
 		<label for='sl1'></label>
 			<div>
-				<p> 1</p> <img src='img/1.jpg' >
+				<img src='img/1.jpg' >
 			</div>
 		<input type='radio' name='slider1' id='sl2'>
 		<label for='sl2'></label>
 			<div>
-				<p> 2 </p> <img src='img/2.jpg' >
+				<img src='img/2.jpg' >
 			</div>
 		<input type='radio' name='slider1' id='sl3'>
 		<label for='sl3'></label>
 			<div>
-				<p> 3 </p> <img src='img/3.jpg' >
+				<img src='img/3.jpg' >
 			</div>
 	</div> 
 <?php }
