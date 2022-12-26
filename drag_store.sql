@@ -1,15 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Хост: 127.0.0.1:3306
-<<<<<<< HEAD
--- Время создания: Дек 26 2022 г., 20:11
-=======
--- Время создания: Дек 26 2022 г., 16:57
->>>>>>> 9a20244018b8add1c3d0bcf033adfded91891498
--- Версия сервера: 8.0.30
--- Версия PHP: 7.2.34
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
