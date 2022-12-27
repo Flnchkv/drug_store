@@ -1,10 +1,10 @@
 ﻿input.off {
     background: #d1eff2;
-	border-radius: 30px;
+	border-radius: 20px;
 }
 input.on {
     background: #f28b74;
-	border-radius: 30px;
+	border-radius: 20px;
 }
 /* input.b {
     background: #f28b74;

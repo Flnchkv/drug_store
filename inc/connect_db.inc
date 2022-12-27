@@ -160,9 +160,7 @@ function user_acc()
         $bday  = $result['bday'];
         $photo  = $result['photo'];
 		$login = $result['login'];
-			/*$options = ['cost' => 12,];
-			$hash = password_hash("knm", PASSWORD_BCRYPT, $options);
-			echo $hash;*/
+
         echo "<tr> <td> ФИО </td> <td> <input type = 'text' name ='fio' value= '$fio'> </td> <td rowspan=6> <img src='$photo' class='mine'> <br/> <input type='file' name='photo'> </td> </tr>";
         echo "<tr> <td> Логин </td> <td> <input type = 'text' name ='login' value= '$login'  maxlength=20> </td> </tr>";
         echo "<tr> <td> Пароль </td> <td> <input type = 'password' name ='pswd' value= '$pswd'  maxlength=20> </td> </tr>";
@@ -558,11 +556,11 @@ function show_busket() // хотите изменить заказ - удаля�
         $sum = 0;
         echo "<form method='post' action='busket.php?".session_name().'='.session_id()."'> <table border = 5 >";
 
-            $img = $result['.img'];
-            $g_name = $result['.name'];
-            $z_id = $result['.id'];
-            $count = $result['.count'];
-            $price = $result['.cost'];
+            $img = $result['img'];
+            $g_name = $result['name'];
+            $z_id = $result['id'];
+            $count = $result['count'];
+            $price = $result['cost'];
             $sum += $price* $count;
             echo "<tr> <td> <img src='$img'> <b> $g_name </b> $price </td> <td> $count шт </td>";
             echo "<td> <button name='delete' value = $z_id> Удалить </button> </td> </tr>";
@@ -587,13 +585,13 @@ function already_bought()
     if (! $result1) { echo $link -> error; return false;}
     else while($result = $result1->fetch_array())
     {
-			$fio = $result['.fio'];
-            $date = $result['.date'];
-            $count = $result['.count'];
-            $cost = $result['.cost'];
-            $done = $result['.done'];
-            $g_name = $result['.name'];
-            $z_id =$result['.id'];
+			$fio = $result['fio'];
+            $date = $result['date'];
+            $count = $result['count'];
+            $cost = $result['cost'];
+            $done = $result['done'];
+            $g_name = $result['name'];
+            $z_id =$result['id'];
             $sum = $cost * $count;
             echo "<tr> <td> $fio </td> <td> $date </td> <td> $g_name </td> <td> $count шт. </td> <td> $sum руб. </td> <td> <button name = 'z_done' value = $z_id > V </button> </td> <td> <button name = 'z_delete' value = $z_id> X </button> </td> </tr>";
 
@@ -616,13 +614,13 @@ function already_done()
     if (! $result1) { echo $link -> error; return false;}
     else while($result = $result1->fetch_array())
     {
-			$fio = $result['.fio'];
-            $date = $result['.date'];
-            $count = $result['.count'];
-            $cost = $result['.cost'];
-            $done = $result['.done'];
-            $g_name = $result['.name'];
-            $z_id = $result['.id'];
+			$fio = $result['fio'];
+            $date = $result['date'];
+            $count = $result['count'];
+            $cost = $result['cost'];
+            $done = $result['done'];
+            $g_name = $result['name'];
+            $z_id = $result['id'];
             $sum = $cost * $count;
             echo "<tr> <td> $fio </td> <td> $date </td> <td> $g_name </td> <td> $count шт. </td> <td> $sum руб. </td> <td> <button name = 'z_delete' value = $z_id> X </button> </td> </tr>";
     }

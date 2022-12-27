@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 27 2022 г., 07:40
+-- Время создания: Дек 27 2022 г., 08:28
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -115,10 +115,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `fio`, `login`, `pswd`, `address`, `phone`, `email`, `discount`, `bday`, `photo`, `role`, `workS`) VALUES
-(1, 'Коновалов Андрей Михайлович', 'director', 'pswd', ' Артем, ул. Западная 8 ', '8-880-987-35-35', 'director@mail.ru', 10, '0000-00-00', '/kozlova/img/users/director.jpg', 'director', '2017-10-01'),
-(2, 'Коновал Михайл', 'kn', 'knm', ' Артем, ул. Кирова 15 ', '8-800-555-35-35', 'konovam@mail.ru', 5, '0000-00-00', '/kozlova/img/users/l9I5e5yPDy8.jpg', 'provisor', '2017-11-01'),
-(3, 'Козлова Светлана Евгеньевна', 'koz', 'koz123', 'Артем, ул. Фрунзе 10', '8-914-756-35-35', 'kozlova@mail.ru', 0, NULL, '', 'customer', '0000-00-00'),
-(4, 'Филончикова Анна Сергеевна', 'fil', '123', 'г Владивосток, ул Державина, д 21, кв 916а', '8-983-508-57-60', 'afilonchikova2@gmail.com', 0, '2001-01-01', '', 'customer', '2001-01-01'),
+(1, 'Коновалов Андрей Михайлович', 'director', '$2y$12$o/HFOjdiewrpp06r72dfGe1M1Da1wVV5OuXfoluWdoUZMjhmpTKAq', ' Артем, ул. Западная 8 ', '8-880-987-35-35', 'director@mail.ru', 10, '0000-00-00', '/img/users/director.jpg', 'director', '2017-10-01'),
+(2, 'Коновал Михайл', 'kn', '$2y$12$RrNm/5N8il5.r62EAJS8OeEtoJ9JISqs/KkjvvJTiPqGLLT08cCPq', ' Артем, ул. Кирова 15 ', '8-800-555-35-35', 'konovam@mail.ru', 5, '0000-00-00', '/img/users/l9I5e5yPDy8.jpg', 'provisor', '2017-11-01'),
+(3, 'Козлова Светлана Евгеньевна', 'koz', '$2y$12$1WlJDWJhsw.fkCpgtszGLu4sCl.6VpX3.jj9/IhoBVKKVJigLMAry', 'Артем, ул. Фрунзе 10', '8-914-756-35-35', 'kozlova@mail.ru', 0, NULL, '', 'customer', '0000-00-00'),
 (11, 'Филончикова Анна Сергеевна', 'fil', '$2y$12$D5.rlHjprPOX7EFgmqxz3eXcERQxpQ3VQQ3J2Svo5iRAS2goOm13q', 'г Владивосток, ул Державина, д 21, кв 916а', '8-983-508-57-60', 'afilonchikova2@gmail.com', 0, '2001-01-01', '', 'customer', '2001-01-01');
 
 -- --------------------------------------------------------
