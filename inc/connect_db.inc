@@ -25,6 +25,11 @@ function pswd_in_db($pswd)
 	return password_hash($pswd, PASSWORD_BCRYPT, $options);
 }
 
+function message($text)
+{
+	return '<dir class="message">' . $text . '</dir>';
+}
+
 
 //****************************************************************
 //подключение
@@ -39,7 +44,7 @@ function connect_it()
         $link = mysqli_connect($servername, $username, $password, $db);
         $link -> set_charset("utf-8");
         if (! $link)
-        { $error = "<p> Не могу соедениться с сервером </p>"; return false; }
+        { $error = message('Не могу соедениться с сервером'); return false; }
         return $link;
 }
 
@@ -53,9 +58,9 @@ function register()
 		  $pswd = pswd_in_db($_POST[pswdreg]);
           $sql = "INSERT INTO user (`fio`, `login`,  `pswd`, `address`, `phone`, `email`, `role`) VALUES ('$_POST[fio]', '$_POST[logreg]', '$pswd', '$_POST[address]', '$_POST[tel]', '$_POST[email]', 'customer')";
           if ( $link -> query($sql))
-          echo "ok";
+          echo message("ok");
           else {
-            echo $link -> error;
+            echo message($link -> error);
           }
        $link -> close();
 	   };
@@ -69,13 +74,13 @@ function login()
     $query = "SELECT * FROM `user` WHERE login = '$_POST[login]'";
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link->query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else
 		while($result = $result1->fetch_array())
 		{
 		if (password_verify($pswd, $result['pswd']))
 		{
-			echo 'Password is valid!';
+			echo message("Password is valid!");
 			session_start();
 			$_SESSION['session_uname'] = $result['fio'];
 			$_SESSION['today'] = date("Y-n-d");
@@ -83,7 +88,7 @@ function login()
 			$_SESSION['role'] = $result['role'];
 		}
 		else {
-			echo 'Invalid password.';
+			echo message("Invalid password.");
 		}
 		}
     mysqli_close($link);
@@ -97,11 +102,11 @@ function remember_pswd($email, $phone)
     $query = "SELECT `login` FROM $name WHERE `email` = '$email' AND `phone` = '$phone'";
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else if($result1->num_rows == 0 )
-		echo "Проверочные данные были введены неправильно.";
+		echo message("Проверочные данные были введены неправильно.");
 	else if($result1->num_rows > 1)
-		echo "Ошибка в данных, обратитесь к администратору.";
+		echo message("Ошибка в данных, обратитесь к администратору.");
 	else
 		while($result = $result1->fetch_array())
 		{
@@ -121,8 +126,8 @@ function undate_pswd($login, $pswd)
 	$pswd = pswd_in_db($pswd);
 	$query = "UPDATE `user` SET `pswd` = '$pswd' WHERE `login` = '$login'";
 	$result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
 }
 
 function discount()
@@ -131,7 +136,7 @@ function discount()
 	$dc = 0;
     $query = "SELECT `discount` FROM `user` WHERE `id` = '".$_SESSION['user_id']."'";
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array()){
         $dc = $result['discount'];
     mysqli_close($link);
@@ -147,7 +152,7 @@ function user_acc()
     $query = "SELECT * FROM `user` WHERE `id` = '" . $_SESSION['user_id'] . "'";
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else 	while($result = $result1->fetch_array()){
 
         echo "<form method='post' action=\"account.php?".session_name().'='.session_id() ." \"> <table>";
@@ -190,10 +195,10 @@ function acc_change($fio, $login, $pswd, $address, $phone, $email, $bday, $photo
     $query = "UPDATE $name SET `fio` = '$fio', `login` = '$login', `pswd` = '$pswd', `address` = '$address', `phone` = '$phone', `email` = '$email', `bday` = '$bday'" . $photocode ." WHERE `id` = " . $_SESSION['user_id'];
         //echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
+    if (! $result) { echo message($link -> error); return false;}
     else
     {
-        echo "Данные введены";
+        echo message("Данные введены");
         $_SESSION['session_uname'] = $fio;
         return true;
     }
@@ -208,8 +213,8 @@ function u_delete($id)
     $query = "DELETE FROM `$name` WHERE `id` = $id";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
 }
 
 function u_change($id, $dc, $role, $since)
@@ -219,8 +224,8 @@ function u_change($id, $dc, $role, $since)
     $query = "UPDATE `$name` SET `discount` = '$dc' , `role` = '$role', `workS` = '$since' WHERE `id` = $id";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
     mysqli_free_result($result);
     mysqli_close($link);
 }
@@ -232,7 +237,7 @@ function all_users()
     $query = " SELECT * FROM $name";
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
     {
         echo "<table>";
@@ -260,7 +265,7 @@ function u_edit($id)
     $query = " SELECT * FROM $name WHERE `id` = $id";
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
     {
         echo "<form method = 'post' action='users.php?".session_name().'='.session_id()."'> <table>";
@@ -303,7 +308,7 @@ function good_type_select($filename)
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
     $i=0;
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else
 	{
 		echo "<form action='search_res.php?".session_name()."=".session_id()."' method='post'> <table>";
@@ -311,7 +316,7 @@ function good_type_select($filename)
 		{ $i=$i+1;
 				$type = $result['name'];
 				echo "<tr>";
-				echo "<td> <input type='submit' name='type" . $i ."' value='$type' class='b'> </td>";
+				echo "<td> <input class='good_type' type='submit' name='type" . $i ."' value='$type' class='b'> </td>";
 				echo "</tr>";
 				echo "</tr>";
 				// генерация кода последующей выборки товаров опр категории, для динамичного использования бд
@@ -334,7 +339,7 @@ function good_only_name_search($search_name)
      $query = "SELECT * FROM $name WHERE name LIKE '%".$search_name."%'";
         //echo "<font color=green> Запрос: </font>" . $query;
      $result1 = $link -> query($query);
-     if (! $result1) { echo $link -> error; return false;}
+     if (! $result1) { echo message($link -> error); return false;}
      else while($result = $result1->fetch_array())
      {
          echo "<form method='post'> <table border = 5 >";
@@ -358,7 +363,7 @@ function good_readmore($search_name)
     $query = "SELECT * FROM $name WHERE name ='" .$search_name. "'";
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
     {
         $img = $result['img'];
@@ -382,7 +387,7 @@ function all_goods()
     $query = "SELECT `id`, `name`, `type`, `price` FROM `goods` ORDER BY `type`";
         //echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
     {
         $g_id = $result['id'];
@@ -402,7 +407,7 @@ function echo_good_types($fild_name)
     echo "<datalist id='$fild_name'>";
     $query = "SELECT * FROM `categories`";
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else
 		while($result = $result1->fetch_array())
 	        echo "<option>" . $result['name'] ." </option>";
@@ -417,8 +422,8 @@ function add_new_good($g_name, $type, $about, $img, $price)
     $query = "INSERT INTO `goods` (`name`, `type`, `about`, `img`, `price`) VALUES ('$g_name','$type', '$about','/img/goods/" . $img . "', $price)";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
     mysqli_close($link);
     mysqli_free_result($result);
 }
@@ -429,8 +434,8 @@ function add_type($name)
     $query = "INSERT INTO `categories` (`name`) VALUES ('$name')";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
     mysqli_close($link);
     mysqli_free_result($result);
 }
@@ -443,7 +448,7 @@ function g_edit($g_id)
     $query = "SELECT * FROM $name WHERE id = $g_id ";
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
     {
         $img = $result['img'];
@@ -470,8 +475,8 @@ function good_change($g_id, $g_name, $type, $about, $img, $price)
     $query = "UPDATE $name SET `name` = '$g_name', `type` = '$type', `about` = '$about'" . $photocode. ", `price` = $price WHERE `id` = $g_id";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
     mysqli_close($link);
     mysqli_free_result($result);
 }
@@ -483,8 +488,8 @@ function g_delete($g_id)
     $query = "DELETE FROM `$name` WHERE `id` = $g_id";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
     mysqli_close($link);
     mysqli_free_result($result);
 }
@@ -497,7 +502,7 @@ function to_busket($g_id, $count)
 
     $query = "SELECT `price` FROM `goods` WHERE `id`= $g_id";
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
         $cost = $result['price'] * (100 - discount()) / 100;
 
@@ -505,8 +510,8 @@ function to_busket($g_id, $count)
     $query = "INSERT INTO $name (client, date,  good, count, sended, done, cost) VALUES ($_SESSION[user_id], '$_SESSION[today]', $g_id, $count, 0, 0, $cost)";
        // echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Данные введены"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Данные введены"); return true;}
     mysqli_close($link);
     mysqli_free_result($result1);
 }
@@ -518,8 +523,8 @@ function delete_from_busket($z_id)
     $query = "DELETE FROM `$name` WHERE `id` = $z_id";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
 	$result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
     mysqli_close($link);
     mysqli_free_result($result);
 }
@@ -531,8 +536,8 @@ function busket_stop()
     $query = "UPDATE $name SET `sended` = 1 WHERE `client` = " . $_SESSION['user_id'] . " AND `date` = \"" . 	$_SESSION['today'] ."\" AND `sended` = 0";
         //echo "<font color=green> Запрос на изменение записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Данные изменены"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Данные изменены"); return true;}
     mysqli_close($link);
     mysqli_free_result($result);
 }
@@ -545,7 +550,7 @@ function show_busket() // хотите изменить заказ - удаля�
     $query = "SELECT `$name1`.`img`, `$name2`.`id`, `$name1`.`name`, `$name2`.`cost`, `$name2`.`count` FROM $name1, $name2 WHERE `$name2`.`client` = " . $_SESSION['user_id'] . " AND `$name2`.`date` = \"" . 	$_SESSION['today'] ."\" AND `$name2`.`sended` = 0 AND `$name1`.`id` = `$name2`.`good`"; // сложный запрос
         //echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else
 	{ $i = 0;
 	while($result = $result1->fetch_array())
@@ -582,7 +587,7 @@ function already_bought()
     $query = "SELECT `$name1`.`fio`, `$name2`.`id`, `$name2`.`date`, `$name2`.`count`, `$name2`.`cost`, `$name2`.`done`, `$name3`.`name` FROM $name1, $name2, $name3 WHERE `$name2`.`client` = `$name1`.`id` AND `$name2`.`good` = `$name3`.`id` AND `$name2`.`sended` = 1 AND `$name2`.`done` = 0 ";
        // echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
     {
 			$fio = $result['fio'];
@@ -611,7 +616,7 @@ function already_done()
     $query = "SELECT `$name1`.`fio`, `$name2`.`id`, `$name2`.`date`, `$name2`.`count`, `$name2`.`cost`, `$name2`.`done`, `$name3`.`name` FROM $name1, $name2, $name3 WHERE `$name2`.`client` = `$name1`.`id` AND `$name2`.`good` = `$name3`.`id` AND `$name2`.`done` = 1";
        // echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result1 = $link -> query($query);
-    if (! $result1) { echo $link -> error; return false;}
+    if (! $result1) { echo message($link -> error); return false;}
     else while($result = $result1->fetch_array())
     {
 			$fio = $result['fio'];
@@ -636,8 +641,8 @@ function z_done($z_id)
     $query = "UPDATE `$name`SET `done` = 1 WHERE `id` = $z_id";
         //echo "<font color=green> Запрос на удаление записи: </font>" . $query;
     $result = $link -> query($query);
-    if (! $result) { echo $link -> error; return false;}
-    else { echo "Выполнено"; return true;}
+    if (! $result) { echo message($link -> error); return false;}
+    else { echo message("Выполнено"); return true;}
     mysqli_close($link);
     mysqli_free_result($result);
 }

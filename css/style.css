@@ -138,3 +138,21 @@ A:hover {
 .slider > div > img {
 	height: 100%;
 }
+
+.message{
+    color:orangered;
+}
+
+button {
+    background: #00FFFF;
+    border-radius: 20px;
+}
+
+.good_type {
+    background: #00FFFF;
+    border-radius: 20px;
+}
+/*/input[type=submit] {
+    background: #8A2BE2;
+    border-radius: 20px;
+}*/
