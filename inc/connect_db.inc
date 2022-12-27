@@ -7,22 +7,22 @@ function get_roles_array()
 	return $arr;
 }
 function get_choice_html($arr, $name)
-{	
+{
 	$res = "";
 	if(is_array($arr))
 	{
 		$res = "<datalist id='$name'>";
-		foreach ($arr as $value) 
+		foreach ($arr as $value)
 			$res .= "<option> $value </option>";
-		$res .= "</datalist>"; 
-	}	
+		$res .= "</datalist>";
+	}
 	return $res;
 }
 
 function pswd_in_db($pswd)
 {
 	$options = ['cost' => 12,];
-	return password_hash($pswd, PASSWORD_BCRYPT, $options);     
+	return password_hash($pswd, PASSWORD_BCRYPT, $options);
 }
 
 
@@ -81,10 +81,10 @@ function login()
 			$_SESSION['today'] = date("Y-n-d");
 			$_SESSION['user_id'] = $result['id'];
 			$_SESSION['role'] = $result['role'];
-		} 
+		}
 		else {
 			echo 'Invalid password.';
-		}			
+		}
 		}
     mysqli_close($link);
     mysqli_free_result($result1);
@@ -98,16 +98,16 @@ function remember_pswd($email, $phone)
         //echo "<font color=green> Запрос: </font>" . $query;
     $result1 = $link -> query($query);
     if (! $result1) { echo $link -> error; return false;}
-    else if($result1->num_rows == 0 ) 
+    else if($result1->num_rows == 0 )
 		echo "Проверочные данные были введены неправильно.";
-	else if($result1->num_rows > 1) 
+	else if($result1->num_rows > 1)
 		echo "Ошибка в данных, обратитесь к администратору.";
 	else
 		while($result = $result1->fetch_array())
 		{
 			$login = $result['login'];
 			echo "<form action='index.php' method='post'><table><tr> ";
-			echo "<tr><td> Введите новый пароль </td> <td> <input type='submit' name='undate_pswd' value='Сохранить изменения'> </td> </tr>"; 
+			echo "<tr><td> Введите новый пароль </td> <td> <input type='submit' name='undate_pswd' value='Сохранить изменения'> </td> </tr>";
 			echo "<tr> <td> Логин </td> <td> <input readonly type = 'text' name ='login' value= '$login'  maxlength=20> </td> </tr>";
 			echo "<tr> <td> Пароль </td> <td> <input type = 'password' name ='pswd' value= ''  maxlength=20> </td> </tr>";
   			echo "</tr></table></form>";
@@ -116,7 +116,7 @@ function remember_pswd($email, $phone)
     mysqli_close($link);
 }
 function undate_pswd($login, $pswd)
-{ 
+{
 	$link = connect_it();
 	$pswd = pswd_in_db($pswd);
 	$query = "UPDATE `user` SET `pswd` = '$pswd' WHERE `login` = '$login'";
@@ -125,7 +125,7 @@ function undate_pswd($login, $pswd)
     else { echo "Выполнено"; return true;}
 }
 
-function discount() 
+function discount()
 {
     $link = connect_it();
 	$dc = 0;
@@ -133,7 +133,7 @@ function discount()
     $result1 = $link -> query($query);
     if (! $result1) { echo $link -> error; return false;}
     else while($result = $result1->fetch_array()){
-        $dc = $result1['discount'];
+        $dc = $result['discount'];
     mysqli_close($link);
     mysqli_free_result($result1);
     return $dc;
@@ -254,7 +254,7 @@ function all_users()
     mysqli_free_result($result1);
 }
 
-function u_edit($id) 
+function u_edit($id)
 {
     echo "<a href='users.php?".session_name().'='.session_id()."'> Вернуться на страницу выбора товара </a> ";
     $link = connect_it();
@@ -274,16 +274,16 @@ function u_edit($id)
         $since = $result['workS'];
         echo "<tr> <td colspan=2> $name </td> <td> $phone </td> <td> $email </td> </tr>";
 		echo "<tr> <td> <input name='dc' type='number' value = $discount min=0 max=99 > </td> <td> <input type='text' name='role' list='roles' value='" . $u_role. "' > </td>";
-			
+
 		if($u_role == "customer")
 		{
 			echo "<td> зарегистирован с <input type='date' name='since' value='" . $since ."' > </td>";
 		}
-		else 
+		else
 		{
 			echo "<td> работает с <input type='date' name='since' value='" . $since ."' > </td>";
 		}
-			
+
 		echo "<td> <button name='u_change' value=$id > Сохранить </button> </td>  </tr> </table>";
 		echo get_choice_html(get_roles_array(), 'roles');
 		echo "</form>";
@@ -306,7 +306,7 @@ function good_type_select($filename)
     $result1 = $link -> query($query);
     $i=0;
     if (! $result1) { echo $link -> error; return false;}
-    else 
+    else
 	{
 		echo "<form action='search_res.php?".session_name()."=".session_id()."' method='post'> <table>";
 		while($result = $result1->fetch_array())
@@ -318,7 +318,7 @@ function good_type_select($filename)
 				echo "</tr>";
 				// генерация кода последующей выборки товаров опр категории, для динамичного использования бд
 				$code .= "if(isset(\$_POST['type" .$i."'])) \n { \$link = connect_it(); \n \$name = \"goods\";\n \$query = \"SELECT * FROM \$name WHERE type = '".$type."'\"; \n ";
-				$code .= file_get_contents("inc/good_type_button.inc");		
+				$code .= file_get_contents("inc/good_type_button.inc");
 		}
 		echo "</table>";
 	}
@@ -405,8 +405,8 @@ function echo_good_types($fild_name)
     $query = "SELECT * FROM `categories`";
     $result1 = $link -> query($query);
     if (! $result1) { echo $link -> error; return false;}
-    else 
-		while($result = $result1->fetch_array()) 
+    else
+		while($result = $result1->fetch_array())
 	        echo "<option>" . $result['name'] ." </option>";
     echo "</datalist>";
     mysqli_close($link);
@@ -454,7 +454,7 @@ function g_edit($g_id)
         $about =  $result['about'];
         $price =  $result['price'];
         $g_id = $result['id'];
-        echo "<tr> <td rowspan=4> <img src='$img'>  <br/> <input type='file' name='img'>  </td> <td> Наименование </td> <td>  <input type = 'text' name ='name' value= '$g_name'> </td> </tr> <tr> <td> Категория </td> <td> <input type = 'text' name ='type' list='types' value= '$type'> </td> </tr> <tr> <td> Цена </td> <td> <input type = 'number' min='0.01' step='0.01' name ='price' value= '$price'> </td> </tr> <tr> <td rowspan=3> Подробнее о товаре </td> <td rowspan=3 colspan=2> <textarea name='about' rows=3> $about </textarea> </td> </tr>";
+        echo "<tr> <td rowspan=4> <img src='$img'width='500' height='600'>  <br/> <input type='file' name='img'>  </td> <td> Наименование </td> <td>  <input type = 'text' name ='name' value= '$g_name'> </td> </tr> <tr> <td> Категория </td> <td> <input type = 'text' name ='type' list='types' value= '$type'> </td> </tr> <tr> <td> Цена </td> <td> <input type = 'number' min='0.01' step='0.01' name ='price' value= '$price'> </td> </tr> <tr> <td rowspan=3> Подробнее о товаре </td> <td rowspan=3 colspan=2> <textarea name='about' rows=3> $about </textarea> </td> </tr>";
     }
     echo "</table>";
     mysqli_close($link);
@@ -548,7 +548,7 @@ function show_busket() // хотите изменить заказ - удаля�
         //echo "<font color=green> Запрос на заполнение таблицы: </font>" . $query;
     $result1 = $link -> query($query);
     if (! $result1) { echo $link -> error; return false;}
-    else 
+    else
 	{ $i = 0;
 	while($result = $result1->fetch_array())
     {	$i+=1;
